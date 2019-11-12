@@ -1,0 +1,267 @@
+﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="BuildXamls"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
+ xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+ xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+ xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
+ xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+ xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib"
+ xmlns:sd="clr-namespace:System.Data;assembly=System.Data"
+ xmlns:ui="http://schemas.uipath.com/workflow/activities"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="in_SelectedProject" Type="InArgument(x:String)" />
+    <x:Property Name="in_TemplatesDict" Type="InArgument(scg:Dictionary(x:String, x:String))" />
+    <x:Property Name="in_TemplateFile" Type="InArgument(x:String)" />
+    <x:Property Name="in_DesignDT" Type="InArgument(sd:DataTable)" />
+  </x:Members>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <sap2010:WorkflowViewState.IdRef>BuildXamls_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>UiPath.Orchestrator.Client</x:String>
+      <x:String>UiPath.Orchestrator.Client.Models</x:String>
+      <x:String>UiPath.Excel.Activities</x:String>
+      <x:String>UiPath.CSV.Activities</x:String>
+      <x:String>UiPath.Excel</x:String>
+      <x:String>UiPath.CSV</x:String>
+      <x:String>UiPath.Mail.Activities</x:String>
+      <x:String>UiPath.Mail.Exchange.Activities</x:String>
+      <x:String>UiPath.Mail.IMAP.Activities</x:String>
+      <x:String>UiPath.Mail.Outlook.Activities</x:String>
+      <x:String>UiPath.Mail.POP3.Activities</x:String>
+      <x:String>UiPath.Mail.SMTP.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>UiPath.Studio.Plugin.Workflow</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.OrchestratorClient</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>UiPath.Mail.Activities</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>UiPath.Mail</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
+      <AssemblyReference>System.Collections.Immutable</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence sap2010:Annotation.AnnotationText="Description:&#xD;&#xA;This will build out the xaml file using the templated xaml file included in the project. &#xD;&#xA;The template is:&#xD;&#xA;Sequence_Template.txt&#xD;&#xA;&#xD;&#xA;BE VERY CAREFUL EDITTING THIS FILE." DisplayName="Build Xamls" sap2010:WorkflowViewState.IdRef="Sequence_4">
+    <ui:ForEachRow CurrentIndex="{x:Null}" DataTable="[in_DesignDT]" DisplayName="For Each Row in DesignDT" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
+      <ui:ForEachRow.Body>
+        <ActivityAction x:TypeArguments="sd:DataRow">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="sd:DataRow" Name="row" />
+          </ActivityAction.Argument>
+          <Sequence DisplayName="Body" sap2010:WorkflowViewState.IdRef="Sequence_7">
+            <Sequence.Variables>
+              <Variable x:TypeArguments="x:String" Name="NewModule" />
+              <Variable x:TypeArguments="x:String" Name="NewAnnotation" />
+              <Variable x:TypeArguments="x:String" Name="NewArguments" />
+              <Variable x:TypeArguments="x:String" Name="TemplateName" />
+              <Variable x:TypeArguments="x:Int32" Name="rowIndex" />
+              <Variable x:TypeArguments="sd:DataTable" Name="DesignDT" />
+            </Sequence.Variables>
+            <Assign sap2010:WorkflowViewState.IdRef="Assign_29">
+              <Assign.To>
+                <OutArgument x:TypeArguments="sd:DataTable">[DesignDT]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="sd:DataTable">[in_DesignDT]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <ui:ForEach x:TypeArguments="sd:DataColumn" CurrentIndex="[rowIndex]" DisplayName="For Each" sap2010:WorkflowViewState.IdRef="ForEach`1_3" Values="[in_DesignDT.Columns]">
+              <ui:ForEach.Body>
+                <ActivityAction x:TypeArguments="sd:DataColumn">
+                  <ActivityAction.Argument>
+                    <DelegateInArgument x:TypeArguments="sd:DataColumn" Name="col" />
+                  </ActivityAction.Argument>
+                  <Sequence DisplayName="Body" sap2010:WorkflowViewState.IdRef="Sequence_12">
+                    <Sequence.Variables>
+                      <Variable x:TypeArguments="x:String" Name="escapedItem" />
+                    </Sequence.Variables>
+                    <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke EscapeSpecialCharacters workflow" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="EscapeSpecialCharacters.xaml">
+                      <ui:InvokeWorkflowFile.Arguments>
+                        <InArgument x:TypeArguments="x:String" x:Key="in_String">[row.Item(col.ToString).ToString]</InArgument>
+                        <OutArgument x:TypeArguments="x:String" x:Key="out_String">[escapedItem]</OutArgument>
+                      </ui:InvokeWorkflowFile.Arguments>
+                    </ui:InvokeWorkflowFile>
+                    <Assign DisplayName="Reassign the escaped value" sap2010:WorkflowViewState.IdRef="Assign_28">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:Object">[row(col)]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:Object">[escapedItem]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                  </Sequence>
+                </ActivityAction>
+              </ui:ForEach.Body>
+            </ui:ForEach>
+            <Assign DisplayName="Assign TemplateName" sap2010:WorkflowViewState.IdRef="Assign_11">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[TemplateName]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">[row.Item("Workflow").ToString]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <Assign DisplayName="Create Working Copy of Template File" sap2010:WorkflowViewState.IdRef="Assign_1">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[NewModule]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">[in_TemplateFile]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke BuildAnnotation workflow" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" UnSafe="False" WorkflowFileName="BuildAnnotation.xaml">
+              <ui:InvokeWorkflowFile.Arguments>
+                <InArgument x:TypeArguments="sd:DataRow" x:Key="in_row">[row]</InArgument>
+                <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_TemplatesDict">[in_TemplatesDict]</InArgument>
+                <InOutArgument x:TypeArguments="x:String" x:Key="io_NewAnnotation">[NewAnnotation]</InOutArgument>
+              </ui:InvokeWorkflowFile.Arguments>
+            </ui:InvokeWorkflowFile>
+            <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke BuildArguments workflow" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_5" UnSafe="False" WorkflowFileName="BuildArguments.xaml">
+              <ui:InvokeWorkflowFile.Arguments>
+                <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_TemplatesDict">[in_TemplatesDict]</InArgument>
+                <InArgument x:TypeArguments="sd:DataRow" x:Key="in_row">[row]</InArgument>
+                <InOutArgument x:TypeArguments="x:String" x:Key="io_NewArguments">[NewArguments]</InOutArgument>
+              </ui:InvokeWorkflowFile.Arguments>
+            </ui:InvokeWorkflowFile>
+            <Assign DisplayName="Replace [[NAME]]" sap2010:WorkflowViewState.IdRef="Assign_6">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[NewModule]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">[NewModule.Replace("[[NAME]]",row.Item("Workflow").ToString)]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <Assign DisplayName="Replace [[ARGUMENTS]]" sap2010:WorkflowViewState.IdRef="Assign_7">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[NewModule]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">[NewModule.Replace("[[ARGUMENTS]]",NewArguments)]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <Assign DisplayName="Replace [[ANNOTATION]]" sap2010:WorkflowViewState.IdRef="Assign_8">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[NewModule]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">[NewModule.Replace("[[ANNOTATION]]",NewAnnotation)]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <Sequence DisplayName="Create File" sap2010:WorkflowViewState.IdRef="Sequence_9">
+              <Sequence.Variables>
+                <Variable x:TypeArguments="x:String" Name="TemplatePreFix" />
+              </Sequence.Variables>
+              <Assign DisplayName="Assign Folder Name" sap2010:WorkflowViewState.IdRef="Assign_12">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:String">[TemplatePreFix]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:String">[TemplateName.Split("_"c).First().ToString]</InArgument>
+                </Assign.Value>
+              </Assign>
+              <ui:CreateDirectory ContinueOnError="True" DisplayName="Create Directory" sap2010:WorkflowViewState.IdRef="CreateDirectory_1" Path="[in_SelectedProject+&quot;/&quot;+TemplatePreFix]" />
+              <ui:WriteTextFile DisplayName="Write Text File" FileName="[in_SelectedProject+&quot;/&quot;+TemplatePrefix+&quot;/&quot;+TemplateName+&quot;.xaml&quot;]" sap2010:WorkflowViewState.IdRef="WriteTextFile_1" Text="[NewModule]" />
+            </Sequence>
+          </Sequence>
+        </ActivityAction>
+      </ui:ForEachRow.Body>
+    </ui:ForEachRow>
+    <sads:DebugSymbol.Symbol>d2FDOlxVc2Vyc1xKYW1lcyBSZWFtZXNcRG9jdW1lbnRzXFVpUGF0aFxEZXZlbG9wbWVudCBJbiBQcm9ncmVzc1xXaGl0ZWJvYXJkVG9Nb2R1bGVcQnVpbGRYYW1scy54YW1sNVsD2QEOAgEBXAXXARUCAQJcNlxFAgFRYgvUARYCAQNrDXIWAgFMcw2OARoCAT6PAQ2WARYCATqXAQ2eARYCATWfAQ2lASUCAS2mAQ2sASUCASWtAQ20ARYCASG1AQ28ARYCARu9AQ3EARYCARXFAQ3TARgCAQRwPHBJAgFPbT1tRwIBTXOfAXO2AQIBS3NGc1ICAUl5E4sBHgIBP5QBOJQBVwIBPZEBOZEBRwIBO5wBOJwBSQIBOJkBOZkBRAIBNqMBVKMBYwIBM6IBa6IBfQIBMZ8BxAGfAdoBAgEwoQFJoQFOAgEuqgFTqgFhAgErqAFrqAF9AgEppgHDAaYB2AECASipAUmpAU4CASayATiyAXUCASSvATmvAUQCASK6ATi6AWkCAR63ATm3AUQCARzCATjCAWsCARi/ATm/AUQCARbJAQ/QARgCARHRAQ/RAcgBAgEM0gEP0gHwAQIBBX0VggEtAgFEgwEVigEeAgFAzgE6zgFlAgEUywE7ywFLAgES0QEz0QE5AgEQ0QGSAdEBxQECAQ3SAeAB0gHtAQIBCtIBSNIBqAECAQZ/Un9zAgFIgAFUgAFhAgFGfdQBffIBAgFFiAFAiAFNAgFChQFBhQFLAgFB</sads:DebugSymbol.Symbol>
+  </Sequence>
+  <sap2010:WorkflowViewState.ViewStateManager>
+    <sap2010:ViewStateManager>
+      <sap2010:ViewStateData Id="Assign_29" sap:VirtualizedContainerService.HintSize="352.666666666667,61.3333333333333" />
+      <sap2010:ViewStateData Id="InvokeWorkflowFile_3" sap:VirtualizedContainerService.HintSize="314,86.6666666666667" />
+      <sap2010:ViewStateData Id="Assign_28" sap:VirtualizedContainerService.HintSize="314,61.3333333333333" />
+      <sap2010:ViewStateData Id="Sequence_12" sap:VirtualizedContainerService.HintSize="336,312">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="ForEach`1_3" sap:VirtualizedContainerService.HintSize="352.666666666667,449.333333333333" />
+      <sap2010:ViewStateData Id="Assign_11" sap:VirtualizedContainerService.HintSize="352.666666666667,61.3333333333333" />
+      <sap2010:ViewStateData Id="Assign_1" sap:VirtualizedContainerService.HintSize="352.666666666667,61.3333333333333" />
+      <sap2010:ViewStateData Id="InvokeWorkflowFile_4" sap:VirtualizedContainerService.HintSize="352.666666666667,86.6666666666667" />
+      <sap2010:ViewStateData Id="InvokeWorkflowFile_5" sap:VirtualizedContainerService.HintSize="352.666666666667,86.6666666666667" />
+      <sap2010:ViewStateData Id="Assign_6" sap:VirtualizedContainerService.HintSize="352.666666666667,61.3333333333333" />
+      <sap2010:ViewStateData Id="Assign_7" sap:VirtualizedContainerService.HintSize="352.666666666667,61.3333333333333" />
+      <sap2010:ViewStateData Id="Assign_8" sap:VirtualizedContainerService.HintSize="352.666666666667,61.3333333333333" />
+      <sap2010:ViewStateData Id="Assign_12" sap:VirtualizedContainerService.HintSize="314,61.3333333333333" />
+      <sap2010:ViewStateData Id="CreateDirectory_1" sap:VirtualizedContainerService.HintSize="314,22" />
+      <sap2010:ViewStateData Id="WriteTextFile_1" sap:VirtualizedContainerService.HintSize="314,86.6666666666667" />
+      <sap2010:ViewStateData Id="Sequence_9" sap:VirtualizedContainerService.HintSize="352.666666666667,374">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Sequence_7" sap:VirtualizedContainerService.HintSize="374.666666666667,1848.66666666667">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="ForEachRow_1" sap:VirtualizedContainerService.HintSize="405.333333333333,2000" />
+      <sap2010:ViewStateData Id="Sequence_4" sap:VirtualizedContainerService.HintSize="427.333333333333,2248">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="BuildXamls_1" sap:VirtualizedContainerService.HintSize="467.333333333333,2328" />
+    </sap2010:ViewStateManager>
+  </sap2010:WorkflowViewState.ViewStateManager>
+</Activity>

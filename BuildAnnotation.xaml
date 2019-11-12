@@ -1,0 +1,227 @@
+﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="BuildAnnotation"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
+ xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+ xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+ xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
+ xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+ xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib"
+ xmlns:sd="clr-namespace:System.Data;assembly=System.Data"
+ xmlns:ui="http://schemas.uipath.com/workflow/activities"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="in_row" Type="InArgument(sd:DataRow)" />
+    <x:Property Name="in_TemplatesDict" Type="InArgument(scg:Dictionary(x:String, x:String))" />
+    <x:Property Name="io_NewAnnotation" Type="InOutArgument(x:String)" />
+  </x:Members>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <sap2010:WorkflowViewState.IdRef>BuildAnnotation_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>UiPath.Orchestrator.Client</x:String>
+      <x:String>UiPath.Orchestrator.Client.Models</x:String>
+      <x:String>UiPath.Excel.Activities</x:String>
+      <x:String>UiPath.CSV.Activities</x:String>
+      <x:String>UiPath.Excel</x:String>
+      <x:String>UiPath.CSV</x:String>
+      <x:String>UiPath.Mail.Activities</x:String>
+      <x:String>UiPath.Mail.Exchange.Activities</x:String>
+      <x:String>UiPath.Mail.IMAP.Activities</x:String>
+      <x:String>UiPath.Mail.Outlook.Activities</x:String>
+      <x:String>UiPath.Mail.POP3.Activities</x:String>
+      <x:String>UiPath.Mail.SMTP.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>UiPath.Studio.Plugin.Workflow</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.OrchestratorClient</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>UiPath.Mail.Activities</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>UiPath.Mail</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence sap2010:Annotation.AnnotationText="Description: This will build out the annotations for the modules. It will first add Description, then if Notes and Exceptions exist they will be added. Next is Pre and Post conditions, finally is Arguments. " DisplayName="Build Annotation" sap2010:WorkflowViewState.IdRef="Sequence_5">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:String" Name="DescriptionTemp" />
+    </Sequence.Variables>
+    <Assign DisplayName="Get Template Annotation" sap2010:WorkflowViewState.IdRef="Assign_2">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:String">[io_NewAnnotation]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:String">[in_TemplatesDict.Item("Annotation").ToString]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <Sequence DisplayName="Build Description" sap2010:WorkflowViewState.IdRef="Sequence_11">
+      <Sequence.Variables>
+        <Variable x:TypeArguments="x:String" Name="NotesTemp" />
+        <Variable x:TypeArguments="x:String" Name="ExceptionsTemp" />
+      </Sequence.Variables>
+      <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Base Description" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="EscapeSpecialCharacters.xaml">
+        <ui:InvokeWorkflowFile.Arguments>
+          <scg:Dictionary x:TypeArguments="x:String, Argument" />
+        </ui:InvokeWorkflowFile.Arguments>
+      </ui:InvokeWorkflowFile>
+      <Assign DisplayName="Base Description" sap2010:WorkflowViewState.IdRef="Assign_23">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[DescriptionTemp]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">[in_row.Item("Description").ToString]</InArgument>
+        </Assign.Value>
+      </Assign>
+      <Assign DisplayName="Notes Temp" sap2010:WorkflowViewState.IdRef="Assign_24">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[NotesTemp]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">[in_row.Item("Notes").ToString]</InArgument>
+        </Assign.Value>
+      </Assign>
+      <If Condition="[NotesTemp = &quot;&quot;]" DisplayName="If Notes Exist" sap2010:WorkflowViewState.IdRef="If_1">
+        <If.Then>
+          <ui:Comment sap2010:WorkflowViewState.IdRef="Comment_1" Text="// Write your comments in the Text property" />
+        </If.Then>
+        <If.Else>
+          <Assign DisplayName="Add Notes to Description" sap2010:WorkflowViewState.IdRef="Assign_26">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[DescriptionTemp]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">[DescriptionTemp + "&amp;#xD;&amp;#xA;&amp;#xD;&amp;#xA;Notes: "+NotesTemp]</InArgument>
+            </Assign.Value>
+          </Assign>
+        </If.Else>
+      </If>
+      <Assign DisplayName="Exceptions Temp" sap2010:WorkflowViewState.IdRef="Assign_25">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[ExceptionsTemp]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">[in_row.Item("Exceptions").ToString]</InArgument>
+        </Assign.Value>
+      </Assign>
+      <If Condition="[ExceptionsTemp = &quot;&quot;]" DisplayName="If Exceptions Exist" sap2010:WorkflowViewState.IdRef="If_2">
+        <If.Then>
+          <ui:Comment sap2010:WorkflowViewState.IdRef="Comment_2" Text="// Write your comments in the Text property" />
+        </If.Then>
+        <If.Else>
+          <Assign DisplayName="Add Exceptions to Description" sap2010:WorkflowViewState.IdRef="Assign_27">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[DescriptionTemp]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">[DescriptionTemp + "&amp;#xD;&amp;#xA;&amp;#xD;&amp;#xA;Exceptions: "+ExceptionsTemp]</InArgument>
+            </Assign.Value>
+          </Assign>
+        </If.Else>
+      </If>
+    </Sequence>
+    <Assign DisplayName="Replace Description" sap2010:WorkflowViewState.IdRef="Assign_3">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:String">[io_NewAnnotation]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:String">[io_NewAnnotation.Replace("[[DESCRIPTION]]",DescriptionTemp)]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <Assign DisplayName="Replace Pre and Post" sap2010:WorkflowViewState.IdRef="Assign_4">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:String">[io_NewAnnotation]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:String">[io_NewAnnotation.Replace("[[PRE]]",in_row.Item("Pre-Condition").ToString).Replace("[[POST]]",in_row.Item("Post-Condition").ToString)]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <Assign DisplayName="Replace Arguments" sap2010:WorkflowViewState.IdRef="Assign_5">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:String">[io_NewAnnotation]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:String">[io_NewAnnotation.Replace("[[ARGUMENTS]]",in_row.Item("Arguments").ToString)]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <sads:DebugSymbol.Symbol>d2ZDOlxVc2Vyc1xKYW1lcyBSZWFtZXNcRG9jdW1lbnRzXFVpUGF0aFxEZXZlbG9wbWVudCBJbiBQcm9ncmVzc1xXaGl0ZWJvYXJkVG9Nb2R1bGVcQnVpbGRBbm5vdGF0aW9uLnhhbWwlWAO+AQ4CAQFcBWMOAgEzZAWkARACARClAQWsAQ4CAQqtAQW0AQ4CAQa1AQW8AQ4CAQJhMGFeAgE2XjFeQwIBNGkHbR8CATFuB3UQAgEtdgd9EAIBKX4HjAEMAgEfjQEHlAEQAgEblQEHowEMAgERqgEwqgFtAgENpwExpwFDAgELsgEwsgG2AQIBCa8BMa8BQwIBB7oBMLoBfQIBBbcBMbcBQwIBA2mvAWnNAQIBMnMyc1cCATBwM3BEAgEuezJ7UQIBLHgzeD4CASp+FX4xAgEggAELgAF4AgEogwELigEUAgEikgEykgFWAgEejwEzjwFDAgEclQEVlQE2AgESlwELlwF4AgEamgELoQEUAgEUiAE2iAGBAQIBJYUBN4UBSAIBI58BNp8BiwECARecATecAUgCARU=</sads:DebugSymbol.Symbol>
+  </Sequence>
+  <sap2010:WorkflowViewState.ViewStateManager>
+    <sap2010:ViewStateManager>
+      <sap2010:ViewStateData Id="Assign_2" sap:VirtualizedContainerService.HintSize="604,62" />
+      <sap2010:ViewStateData Id="InvokeWorkflowFile_2" sap:VirtualizedContainerService.HintSize="582,86.6666666666667" />
+      <sap2010:ViewStateData Id="Assign_23" sap:VirtualizedContainerService.HintSize="582,62" />
+      <sap2010:ViewStateData Id="Assign_24" sap:VirtualizedContainerService.HintSize="582,62" />
+      <sap2010:ViewStateData Id="Comment_1" sap:VirtualizedContainerService.HintSize="314,55.3333333333333" />
+      <sap2010:ViewStateData Id="Assign_26" sap:VirtualizedContainerService.HintSize="242,62" />
+      <sap2010:ViewStateData Id="If_1" sap:VirtualizedContainerService.HintSize="582,216" />
+      <sap2010:ViewStateData Id="Assign_25" sap:VirtualizedContainerService.HintSize="582,62" />
+      <sap2010:ViewStateData Id="Comment_2" sap:VirtualizedContainerService.HintSize="314,55.3333333333333" />
+      <sap2010:ViewStateData Id="Assign_27" sap:VirtualizedContainerService.HintSize="242,62" />
+      <sap2010:ViewStateData Id="If_2" sap:VirtualizedContainerService.HintSize="582,216" />
+      <sap2010:ViewStateData Id="Sequence_11" sap:VirtualizedContainerService.HintSize="604,1028.66666666667">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Assign_3" sap:VirtualizedContainerService.HintSize="604,62" />
+      <sap2010:ViewStateData Id="Assign_4" sap:VirtualizedContainerService.HintSize="604,62" />
+      <sap2010:ViewStateData Id="Assign_5" sap:VirtualizedContainerService.HintSize="604,62" />
+      <sap2010:ViewStateData Id="Sequence_5" sap:VirtualizedContainerService.HintSize="626,1606">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="BuildAnnotation_1" sap:VirtualizedContainerService.HintSize="666,1726" />
+    </sap2010:ViewStateManager>
+  </sap2010:WorkflowViewState.ViewStateManager>
+</Activity>
