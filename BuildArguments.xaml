@@ -19,6 +19,7 @@
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
+  <sap2010:WorkflowViewState.IdRef>BuildArguments_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
       <x:String>System.Activities</x:String>
@@ -88,6 +89,7 @@
   <Sequence DisplayName="Build Arguments" sap2010:WorkflowViewState.IdRef="Sequence_6">
     <Sequence.Variables>
       <Variable x:TypeArguments="s:String[]" Name="ArgumentArray" />
+      <Variable x:TypeArguments="x:String" Name="ArgumentString" />
     </Sequence.Variables>
     <Assign DisplayName="Assign blank New Arguments" sap2010:WorkflowViewState.IdRef="Assign_21">
       <Assign.To>
@@ -99,12 +101,20 @@
         </InArgument>
       </Assign.Value>
     </Assign>
+    <Assign DisplayName="Clean Argumetn String" sap2010:WorkflowViewState.IdRef="Assign_23">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:String">[ArgumentString]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:String">[in_row.Item("Arguments").ToString.replace(vbCrLf, ";").replace(Environment.NewLine, ";").replace("\n", ";").Replace(vbCr,";").Replace(vbLf,";")]</InArgument>
+      </Assign.Value>
+    </Assign>
     <Assign DisplayName="Assign array of arguments from design" sap2010:WorkflowViewState.IdRef="Assign_13">
       <Assign.To>
         <OutArgument x:TypeArguments="s:String[]">[ArgumentArray]</OutArgument>
       </Assign.To>
       <Assign.Value>
-        <InArgument x:TypeArguments="s:String[]">[in_row.Item("Arguments").ToString.Split(";"c)]</InArgument>
+        <InArgument x:TypeArguments="s:String[]">[ArgumentString.Split(";"c)]</InArgument>
       </Assign.Value>
     </Assign>
     <ui:ForEach x:TypeArguments="x:Object" CurrentIndex="{x:Null}" DisplayName="For Each Argument in Array" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[ArgumentArray]">
@@ -204,12 +214,12 @@
         </ActivityAction>
       </ui:ForEach.Body>
     </ui:ForEach>
-    <sads:DebugSymbol.Symbol>d2VDOlxVc2Vyc1xKYW1lcyBSZWFtZXNcRG9jdW1lbnRzXFVpUGF0aFxEZXZlbG9wbWVudCBJbiBQcm9ncmVzc1xXaGl0ZWJvYXJkVG9Nb2R1bGVcQnVpbGRBcmd1bWVudHMueGFtbClYA9ABDgIBAVwFZQ4CAT1mBW0OAgE5bgXOARICAQJiC2I6AgFAXjFeQgIBPmsya2ECATxoM2hCAgE6bqIBbrMBAgE3dAvLARYCAQN7DYQBFgIBM4UBDYwBFgIBL40BDZQBFgIBK5UBDZwBFgIBJ50BDbYBFgIBErcBDcIBFgIBCsMBDcoBFgIBBIEBE4EBQgIBNn05fUcCATSKATiKAWICATKHATmHAUcCATCSATiSAVoCAS6PATmPAUcCASyaATiaAWMCASqXATmXAUYCASidAdsBnQHqAQIBE54BD6UBGAIBIaYBD60BGAIBG64BD7UBGAIBFbcBULcBYAIBC7kBEcABGgIBDcgBOMgBVgIBB8UBOcUBSgIBBaMBOqMBkQECASSgATugAUkCASKrATqrAZIBAgEeqAE7qAFJAgEcswE6swGRAQIBGLABO7ABSQIBFr4BPL4BeAIBELsBPbsBSwIBDg==</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d3VDOlxVc2Vyc1xqYW1lcy5yZWFtZXNcT25lRHJpdmUgLSBVaVBhdGhcRG9jdW1lbnRzXFVpUGF0aFxQcm9kdWN0aW9uQm90c1xXaGl0ZWJvYXJkVG9Nb2R1bGUgLSBDb3B5XEJ1aWxkQXJndW1lbnRzLnhhbWwsWQPaAQ4CAQFeBWcOAgFCaAVvDgIBPnAFdw4CATl4BdgBEgIBAmQLZDoCAUVgMWBCAgFDbTBtwQECAUFqMWpBAgE/dTJ1TgIBPHIzckICATp4ogF4swECATd+C9UBFgIBA4UBDY4BFgIBM48BDZYBFgIBL5cBDZ4BFgIBK58BDaYBFgIBJ6cBDcABFgIBEsEBDcwBFgIBCs0BDdQBFgIBBIsBE4sBQgIBNocBOYcBRwIBNJQBOJQBYgIBMpEBOZEBRwIBMJwBOJwBWgIBLpkBOZkBRwIBLKQBOKQBYwIBKqEBOaEBRgIBKKcB2wGnAeoBAgETqAEPrwEYAgEhsAEPtwEYAgEbuAEPvwEYAgEVwQFQwQFgAgELwwERygEaAgEN0gE40gFWAgEHzwE5zwFKAgEFrQE6rQGRAQIBJKoBO6oBSQIBIrUBOrUBkgECAR6yATuyAUkCARy9ATq9AZEBAgEYugE7ugFJAgEWyAE8yAF4AgEQxQE9xQFLAgEO</sads:DebugSymbol.Symbol>
   </Sequence>
-  <sap2010:WorkflowViewState.IdRef>BuildArguments_1</sap2010:WorkflowViewState.IdRef>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
       <sap2010:ViewStateData Id="Assign_21" sap:VirtualizedContainerService.HintSize="515.333333333333,62" />
+      <sap2010:ViewStateData Id="Assign_23" sap:VirtualizedContainerService.HintSize="515.333333333333,62" />
       <sap2010:ViewStateData Id="Assign_13" sap:VirtualizedContainerService.HintSize="515.333333333333,62" />
       <sap2010:ViewStateData Id="Assign_22" sap:VirtualizedContainerService.HintSize="476.666666666667,62" />
       <sap2010:ViewStateData Id="Assign_14" sap:VirtualizedContainerService.HintSize="476.666666666667,62" />
@@ -238,7 +248,7 @@
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="ForEach`1_1" sap:VirtualizedContainerService.HintSize="515.333333333333,1263.33333333333" />
-      <sap2010:ViewStateData Id="Sequence_6" sap:VirtualizedContainerService.HintSize="537.333333333333,1591.33333333333">
+      <sap2010:ViewStateData Id="Sequence_6" sap:VirtualizedContainerService.HintSize="537.333333333333,1693.33333333333">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -246,7 +256,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="BuildArguments_1" sap:VirtualizedContainerService.HintSize="577.333333333333,1711.33333333333" />
+      <sap2010:ViewStateData Id="BuildArguments_1" sap:VirtualizedContainerService.HintSize="577.333333333333,1773.33333333333" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>
