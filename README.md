@@ -27,6 +27,7 @@ How to Use:
    * or using alt+enter in excel for newline.
    
    Determining Argument type: (IN PROGRESS, NOT FULLY SUPPORTED)
+   * WARNING: do not include special characters in argument types : Including ( ;, <, >, etc)
     utilizng the colong and then type name, the automation will attempt to select that as the data type.
     Example:
     in_name : string

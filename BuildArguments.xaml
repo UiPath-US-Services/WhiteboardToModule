@@ -1,16 +1,17 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="BuildArguments" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="BuildArguments" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property Name="in_TemplatesDict" Type="InArgument(scg:Dictionary(x:String, x:String))" />
     <x:Property Name="in_row" Type="InArgument(sd:DataRow)" />
     <x:Property Name="io_NewArguments" Type="InOutArgument(x:String)" />
+    <x:Property Name="in_PackageType" Type="InArgument(x:String)" />
   </x:Members>
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>908,1800</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>912,2186</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>BuildArguments_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
-    <sco:Collection x:TypeArguments="x:String">
+    <scg:List x:TypeArguments="x:String" Capacity="66">
       <x:String>System.Activities</x:String>
       <x:String>System.Activities.Statements</x:String>
       <x:String>System.Activities.Expressions</x:String>
@@ -44,10 +45,13 @@
       <x:String>UiPath.Mail.POP3.Activities</x:String>
       <x:String>UiPath.Mail.SMTP.Activities</x:String>
       <x:String>System.Windows.Markup</x:String>
-    </sco:Collection>
+      <x:String>System.Activities.DynamicUpdate</x:String>
+      <x:String>Microsoft.VisualBasic.CompilerServices</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+    </scg:List>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
-    <sco:Collection x:TypeArguments="AssemblyReference">
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="48">
       <AssemblyReference>System.Activities</AssemblyReference>
       <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
       <AssemblyReference>mscorlib</AssemblyReference>
@@ -72,12 +76,12 @@
       <AssemblyReference>System.ServiceModel</AssemblyReference>
       <AssemblyReference>UiPath.Mail</AssemblyReference>
       <AssemblyReference>System.ValueTuple</AssemblyReference>
-    </sco:Collection>
+      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
+    </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="Build Arguments" sap:VirtualizedContainerService.HintSize="617,1695" sap2010:WorkflowViewState.IdRef="Sequence_6">
+  <Sequence DisplayName="Build Arguments" sap:VirtualizedContainerService.HintSize="617,2081" sap2010:WorkflowViewState.IdRef="Sequence_6">
     <Sequence.Variables>
       <Variable x:TypeArguments="s:String[]" Name="ArgumentArray" />
-      <Variable x:TypeArguments="x:String" Name="ArgumentString" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -95,29 +99,21 @@
         </InArgument>
       </Assign.Value>
     </Assign>
-    <Assign DisplayName="Clean Argumetn String" sap:VirtualizedContainerService.HintSize="575,60" sap2010:WorkflowViewState.IdRef="Assign_23">
-      <Assign.To>
-        <OutArgument x:TypeArguments="x:String">[ArgumentString]</OutArgument>
-      </Assign.To>
-      <Assign.Value>
-        <InArgument x:TypeArguments="x:String">[in_row.Item("Arguments").ToString.replace(vbCrLf, ";").replace(Environment.NewLine, ";").replace("\n", ";").Replace(vbCr,";").Replace(vbLf,";")]</InArgument>
-      </Assign.Value>
-    </Assign>
     <Assign DisplayName="Assign array of arguments from design" sap:VirtualizedContainerService.HintSize="575,60" sap2010:WorkflowViewState.IdRef="Assign_13">
       <Assign.To>
         <OutArgument x:TypeArguments="s:String[]">[ArgumentArray]</OutArgument>
       </Assign.To>
       <Assign.Value>
-        <InArgument x:TypeArguments="s:String[]">[ArgumentString.Split(";"c)]</InArgument>
+        <InArgument x:TypeArguments="s:String[]">[in_row.Item("Arguments").ToString.replace(environment.newline,";").Split(";"c)]</InArgument>
       </Assign.Value>
     </Assign>
-    <ui:ForEach x:TypeArguments="x:Object" CurrentIndex="{x:Null}" DisplayName="For Each Argument in Array" sap:VirtualizedContainerService.HintSize="575,1303" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[ArgumentArray]">
+    <ui:ForEach x:TypeArguments="x:Object" CurrentIndex="{x:Null}" DisplayName="For Each Argument in Array" sap:VirtualizedContainerService.HintSize="575,1789" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[ArgumentArray]">
       <ui:ForEach.Body>
         <ActivityAction x:TypeArguments="x:Object">
           <ActivityAction.Argument>
             <DelegateInArgument x:TypeArguments="x:Object" Name="item" />
           </ActivityAction.Argument>
-          <Sequence DisplayName="Body for each Argument" sap:VirtualizedContainerService.HintSize="539,1169" sap2010:WorkflowViewState.IdRef="Sequence_10">
+          <Sequence DisplayName="Body for each Argument" sap:VirtualizedContainerService.HintSize="539,1655" sap2010:WorkflowViewState.IdRef="Sequence_10">
             <Sequence.Variables>
               <Variable x:TypeArguments="x:String" Name="ArgumentName" />
               <Variable x:TypeArguments="x:String" Name="ArgumentType" />
@@ -129,6 +125,11 @@
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
+            <If Condition="[item.ToString=&quot;&quot;]" DisplayName="check value exists" sap:VirtualizedContainerService.HintSize="497,208" sap2010:WorkflowViewState.IdRef="If_2">
+              <If.Then>
+                <ui:Break sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Break_1" />
+              </If.Then>
+            </If>
             <Assign DisplayName="Initialize Argument Temp" sap:VirtualizedContainerService.HintSize="497,60" sap2010:WorkflowViewState.IdRef="Assign_22">
               <Assign.To>
                 <OutArgument x:TypeArguments="x:String">[ArgumentTemp]</OutArgument>
@@ -163,7 +164,26 @@
                 <InArgument x:TypeArguments="x:String">[ArgumentName.Split("_"c).First().ToString]</InArgument>
               </Assign.Value>
             </Assign>
-            <Switch x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="This needs to be the first assignment so we can determine which template to use." DisplayName="Switch on Argument Direction" Expression="[ArgumentDir]" sap:VirtualizedContainerService.HintSize="497,317" sap2010:WorkflowViewState.IdRef="Switch`1_1">
+            <If Condition="[in_PackageType=&quot;library&quot;]" DisplayName="Check if Library" sap:VirtualizedContainerService.HintSize="497,300" sap2010:WorkflowViewState.IdRef="If_1">
+              <If.Then>
+                <Sequence sap:VirtualizedContainerService.HintSize="304,152" sap2010:WorkflowViewState.IdRef="Sequence_11">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <Assign DisplayName="Temp Argument Simplified" sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_23">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="x:String">[ArgumentName]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="x:String">[ArgumentName.Replace(ArgumentDir+"_","")]</InArgument>
+                    </Assign.Value>
+                  </Assign>
+                </Sequence>
+              </If.Then>
+            </If>
+            <Switch x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="This needs to be the first assignment so we can determine which template to use." DisplayName="Switch on Argument Direction" Expression="[ArgumentDir]" sap:VirtualizedContainerService.HintSize="497,319" sap2010:WorkflowViewState.IdRef="Switch`1_1">
               <Switch.Default>
                 <Assign DisplayName="Assign In Argument" sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_24">
                   <Assign.To>
@@ -206,7 +226,7 @@
                 </Assign.Value>
               </Assign>
             </Switch>
-            <Switch x:TypeArguments="x:String" DisplayName="Switch" Expression="[ArgumentType]" sap:VirtualizedContainerService.HintSize="497,220" sap2010:WorkflowViewState.IdRef="Switch`1_3">
+            <Switch x:TypeArguments="x:String" DisplayName="Switch" Expression="[ArgumentType]" sap:VirtualizedContainerService.HintSize="497,116" sap2010:WorkflowViewState.IdRef="Switch`1_3">
               <Switch.Default>
                 <Assign DisplayName="Assign default type of string" sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_20">
                   <Assign.To>
